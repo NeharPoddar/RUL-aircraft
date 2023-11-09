@@ -22,11 +22,14 @@ and operational efficiency.
 
 ## 2. Data Preprocessing
 
-## 2.1 Calculation of Remaining Useful Life (RUL)
+**2.1 Calculation of Remaining Useful Life (RUL)**
 
 The first step in our project involved calculating the RUL for each engine unit. This estimation
 was accomplished by identifying the maximum cycle count for each engine unit and subtracting
 the current cycle count from this maximum value.
+
+
+![Screenshot from 2023-10-31 16-40-45](https://github.com/Neher-bot/RUL-aircraft/assets/113058259/2d15dfe2-318c-4a91-85a4-60698c1f3324)
 
 ```
 Figure 1 : The x-axis represents time, while the y-axis corresponds to the variables. The significance of this
@@ -43,7 +46,7 @@ decision-making for subsequent modeling and analysis.
 
 **2.3 Preprocessing Steps**
 
-**2 .3.1 Mean and Standard Deviation Calculation:**
+**2.3.1 Mean and Standard Deviation Calculation:**
 
 Some sensors in the dataset exhibited constant, flat-line behavior. To identify these uninformative
 variables, we calculated both the mean and standard deviation for all sensors. A standard deviation
@@ -51,6 +54,10 @@ close to zero indicated a lack of variability, making these sensors less valuabl
 As presented in Table 1, Setting 3 and sensors 1, 5, 10, 16, 18, and 19 exhibited zero standard
 deviation, confirming their constant values. It became evident that these sensors should be
 excluded from our predictive modeling efforts.
+
+![Screenshot from 2023-10-31 16-42-47](https://github.com/Neher-bot/RUL-aircraft/assets/113058259/c7557642-242f-4c32-97b6-6d9515314739)
+
+
 
 ```
 Table 1 : Mean and Standard Deviation of All Features
@@ -67,6 +74,9 @@ Sensor 14 exhibited relatively smaller correlation coefficients with RUL, indica
 predictive value compared to other variables. These findings guided our variable selection,
 emphasizing the importance of prioritizing sensors with stronger RUL correlations.
 
+![Screenshot from 2023-10-31 17-32-41](https://github.com/Neher-bot/RUL-aircraft/assets/113058259/728bcef0-1866-4342-a5fb-159c9238734a)
+
+
 
 ```
 Figure 2 : Correlation Heat Map
@@ -81,6 +91,8 @@ p-value exceeds 0.05, it indicates that the variables are not causally related, 
 threshold for assessing causality. It is noteworthy that we removed sensors with constant values
 from this analysis, as the Granger test does not consider variables with no variation. This step is
 vital for precise predictive modeling.
+
+![Screenshot from 2023-10-31 16-56-41](https://github.com/Neher-bot/RUL-aircraft/assets/113058259/a406060b-2662-4cb8-8d3e-14494cfd4c4a)
 
 ```
 Table 2 :. P-values from the Granger Causality Test with Lag = 1
@@ -115,24 +127,25 @@ insights into the average magnitude of errors between predictions and actual val
 other hand, is sensitive to outliers and is compatible with mathematical optimization, providing a
 nuanced view of our model's accuracy. By utilizing both MAE and MSE, we aimed to conduct a
 thorough evaluation that balances outlier-resistant performance assessment and optimization
-
-
 suitability, leading to a well-rounded and informed assessment of our model's capabilities. This
 approach accommodates the diverse characteristics and priorities in our analysis, resulting in a
 more robust model evaluation.
 
-3.1 Linear Regression
+**3.1 Linear Regression**
 
 Our initial modeling approach employed Linear Regression, a foundational machine learning
 technique that establishes a linear relationship between RUL and other sensor readings. Linear
 regression seeks to find the best-fitting linear equation by minimizing the sum of squared
-differences between predicted and observed values. The Mean Absolute Error Loss observed was
-27.179516 RUL’s and Mean Squared Error Loss was 27.179516 RUL’s as well.
+differences between predicted and observed values.  
+Mean Absolute Error Loss observed was 27.179516 Cycles  
+Mean Squared Error Loss was 27.179516 RUL Cycles  
+
+![Screenshot from 2023-11-04 19-00-52](https://github.com/Neher-bot/RUL-aircraft/assets/113058259/0995c2cc-88c0-4812-bb50-220b32065483)
 
 ```
 Figure 4 : Linear Regression Result
 ```
-3.2 Support Vector Regression (SVR)
+**3.2 Support Vector Regression (SVR)**
 
 Support Vector Regression (SVR) proved to be a versatile choice for our multivariate time series
 analysis, given its flexibility in capturing complex data relationships. We explored SVR with
@@ -144,14 +157,17 @@ closely and model generalization. Additionally, the impact of data normalization
 performance was examined, revealing that normalized data consistently outperformed non-
 normalized data. This underscores the crucial role of data preprocessing in enhancing SVR's
 capabilities for multivariate time series regression, resulting in improved predictive accuracy and
-model generalization. The Mean Absolute Error Loss observed was 2 6.1129 RUL’s and Mean
-Squared Error Loss was 1072.585 RUL.
+model generalization.   
+Mean Absolute Error Loss observed was 2 6.1129 Cycles  
+Mean Squared Error Loss was 1072.585 Cycles  
 
+![Screenshot from 2023-11-04 19-01-08](https://github.com/Neher-bot/RUL-aircraft/assets/113058259/4425fb17-754c-4b6e-a20f-8404e07c6c00)
 
 ```
 Figure 5 : Support Vector Regression Result
 ```
-3.3 Long Short-Term Memory) (LSTM)
+**3.3 Long Short-Term Memory) (LSTM)**
+
 Recognizing the importance of capturing the time series nature of our data, we opted for a Long
 Short-Term Memory (LSTM) network. Unlike traditional recurrent neural networks (RNNs),
 LSTMs are well-suited for sequences of varying lengths due to their ability to capture long-range
@@ -169,6 +185,8 @@ rates and a rate of 0.001, combines momentum and RMSprop benefits, promoting eff
 convergence and robust optimization. This approach balances model stability, speed, and accuracy
 for effective time series modeling.
 
+![Screenshot from 2023-11-04 19-19-02](https://github.com/Neher-bot/RUL-aircraft/assets/113058259/b4843c81-b4aa-48e3-bccb-6a8011c758b1)
+
 ```
 Figure 6 : Training Loss and Evaluation Loss along 100 Epochs
 ```
@@ -180,20 +198,23 @@ indicating effective learning. Continuous monitoring of the evaluation loss reve
 remained stable, signifying a well-balanced approach that avoids overfitting. Our approach
 highlights the importance of flexible stopping criteria. By experimenting with different criteria and
 vigilant performance monitoring, we ensure the model is trained to capture valuable insights
-without unnecessary complexity. The Mean Absolute Error Loss observed was 9.4772 RUL’s.
+without unnecessary complexity.  
+The Mean Absolute Error Loss observed was 9.4772 Cycles.  
+
+![Screenshot from 2023-11-04 19-19-26](https://github.com/Neher-bot/RUL-aircraft/assets/113058259/2ed3c177-0366-4c1f-941d-0abfc8227174)
 
 ```
 Figure 7 : LSTM Result
 ```
-3.4 Model Selection Rationale
+**3.4 Model Selection Rationale**
 
 The choice of models reflects a progressive refinement aimed at achieving optimal predictive
 accuracy. Each model offers unique strengths, addressing different aspects of the multivariate
-dataset and the temporal characteristics of the data.
+dataset and the temporal characteristics of the data.  
 
 ## 4. Results
 
-4.1 Post Processing
+**4.1 Post Processing**
 
 In our project, we evaluated the performance of three different algorithms for predicting
 Remaining Useful Life (RUL) in aircraft engines. The Linear Regression (LR) model achieved a
@@ -201,49 +222,47 @@ Mean Absolute Error (MAE) of 271.179, indicating its ability to capture some asp
 semi-linear shape. Similarly, the Support Vector Regression (SVR) model exhibited an MAE of
 26.112 and demonstrated its capability to handle the data's linearity. However, both the LR and
 SVR models faced limitations when predicting RUL values, as they occasionally produced
-negative results, which are physically implausible in this context.
+negative results, which are physically implausible in this context.  
 
 In contrast, our Long Short-Term Memory (LSTM) model outperformed the other algorithms,
-yielding the lowest MAE of 9.477. The LSTM model's success can be attributed to its inherent
-
-
+yielding the lowest MAE of 9.477. The LSTM model's success can be attributed to its inherent 
 ability to capture temporal dependencies within the data. Furthermore, its robustness is highlighted
 by the absence of negative RUL predictions, emphasizing its superior alignment with the data's
-temporal dynamics.
+temporal dynamics.  
 
 ## 5. Conclusion
 
 The LSTM model's impressive performance underscores its effectiveness in modeling the complex
 temporal patterns of aircraft engine data. For the prediction of RUL, an essential parameter in
 aircraft maintenance, the LSTM model offers a superior solution. Its robustness, adaptability to
-time series data, and accurate predictions make it a valuable tool for the aviation industry.
+time series data, and accurate predictions make it a valuable tool for the aviation industry.  
 
 ## 6. Future Work
 
-6.1 eXplainable Artificial Intelligence (XAI) and Post-Processing
+**6.1 eXplainable Artificial Intelligence (XAI) and Post-Processing**
 
 To enhance model interpretability and transparency, we recommend the exploration of
 eXplainable Artificial Intelligence (XAI) techniques. XAI tools can provide insights into the
 LSTM model's decision-making processes, allowing for a deeper understanding of its predictions.
 Techniques such as SHAP (SHapley Additive exPlanations) values, LIME (Local Interpretable
 Model-agnostic Explanations), and feature importance analysis can help shed light on the factors
-driving the RUL predictions.
+driving the RUL predictions.  
 
 Additionally, post-processing steps can be applied to further refine the predictions and handle edge
 cases. This might involve setting a threshold to ensure that negative RUL values are automatically
-adjusted to zero, reflecting the practical constraints of the problem.
+adjusted to zero, reflecting the practical constraints of the problem.  
 
 In conclusion, our project demonstrates the potential for advanced machine learning models like
 LSTM to significantly improve the prediction of aircraft engine RUL, ensuring safer and more
 efficient maintenance practices. By incorporating XAI techniques and thoughtful post-processing
 steps, we can further enhance the reliability and transparency of such models in real-world
 applications. This research has far-reaching implications for the aviation industry, contributing to
-enhanced safety, reduced maintenance costs, and improved operational efficiency.
+enhanced safety, reduced maintenance costs, and improved operational efficiency.  
 
 
-```
-References
-```
+
+## 7. References
+
 Hu, Y.; Miao, X.; Si, Y.; Pan, E.; Zio, E. Prognostics and health management: A review from the
 perspectives of design, development and decision. Reliab. Eng. Syst. Saf. 2022, 10, 108063
 
