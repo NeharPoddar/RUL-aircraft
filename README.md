@@ -106,6 +106,7 @@ for approximately 78% of the total data variance. Importantly, there was no clea
 where explained variance significantly diminished, indicating that further dimensionality
 reduction would not significantly impact the dataset's richness. Therefore, we retained all variables
 for our analysis.
+![Screenshot from 2023-11-09 12-19-51](https://github.com/Neher-bot/RUL-aircraft/assets/113058259/d458cacf-401c-49f5-829f-8c930da346ba)
 
 ```
 Figure 3 : Variance Explained by Principal Components
